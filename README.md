@@ -53,3 +53,5 @@ Randomness: Chainlink VRF v2.5 (Direct Funding with native token)
 Standards: Uses OpenZeppelin's Ownable, Pausable, and ReentrancyGuard for robust access control and security.
 
 
+## Challenge we faced
+https://docs.chain.link/vrf/v2-5/security#fulfillrandomwords-must-not-revert:~:text=fulfillRandomWords%20must%20not,Automation%20Node.
