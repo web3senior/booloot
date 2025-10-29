@@ -1,40 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💰 Booloot: The Guaranteed-Win Mystery Box Game
 
 ## Demo
-https://booloot.vercel.app
+https://aratta.dev
 
-## Getting Started
+## Verified Contract
+https://explorer.somnia.network/address/0xD8f7DF0aBD834eDcb3e4FC83A11175eB77449f3B
 
-First, run the development server:
+## Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Booloot is the guaranteed-win mystery box game! Pay a small fee, open a randomized chest, and instantly win a prize from our fixed pool of rewards. Every player receives a payout, and we use secure Chainlink VRF to ensure every draw is provably fair and tamper-proof. It’s all thrill, no risk—play today to claim your share of the loot!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔒 Security & Fair Play (Chainlink VRF)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+This game is built on the principle of verifiable fairness, which is achieved through Chainlink VRF (Verifiable Random Function).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+What is VRF? VRF is a decentralized oracle service that provides cryptographically secure, tamper-proof randomness on-chain. This prevents players (or even the contract owner) from predicting or manipulating the outcome of the prize draw.
 
-## Learn More
+Asynchronous Drawing: Since the random number generation is secure, the process is asynchronous. When a player pays to play, the contract requests a random number, and the prize is only determined and credited once the VRF service provides the result in a subsequent transaction (the callback).
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Key Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Guaranteed Winnings: Every player is guaranteed to win a prize from the fixed prize pool.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Secure Randomness: Utilizes Chainlink VRF for provably fair, non-exploitable prize selection.
 
-## Deploy on Vercel
+Claim Mechanism: Winnings and any overpayments are safely stored in the contract's unclaimedWinnings mapping for players to withdraw at their convenience.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Financial Safety: The contract enforces a minimum balance check to ensure it always holds enough native currency to pay out the largest possible prize (4 ETH) plus the game fee.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-"# booloot" 
+Owner Management: The contract owner can pause/unpause the game and update the required fee.
+
+## 🕹️ How to Play (End-User Steps)
+
+Pay the Fee 💰: Send the required ETH to start a round.
+
+Wait for Draw 🔒: A secure, random system selects your prize and credits your balance.
+
+Claim Your Prizes 💸: Withdraw all accumulated funds (prizes and refunds) to your wallet whenever you're ready!
+
+## 🛠️ Technology & Standards
+
+Solidity: v0.8.30
+
+Randomness: Chainlink VRF v2.5 (Direct Funding with native token)
+
+Standards: Uses OpenZeppelin's Ownable, Pausable, and ReentrancyGuard for robust access control and security.
+
+
