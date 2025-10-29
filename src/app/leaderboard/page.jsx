@@ -108,7 +108,7 @@ export default function Page() {
             <tbody>
               {players.list.length > 0 &&
                 players.list
-                  .sort((a, b) => Number(a.wins) - Number(chains.wins))
+                  .sort((a, b) => Number(b.wins) - Number(a.wins))
                   .map((item, i) => (
                     <tr key={i}>
                       <td>1</td>
