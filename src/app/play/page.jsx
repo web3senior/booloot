@@ -39,6 +39,19 @@ export default function Page() {
     error: receiptError,
   } = useWaitForTransactionReceipt({
     hash,
+    query: {
+      onSuccess: (receipt) => {
+        console.log('Transaction confirmed! Receipt:', receipt)
+        // **CALL YOUR NEXT FUNCTION HERE**
+        getUnclaimedWinnings(address).then((res) => {
+          setUnclaimedWinnings(Number(res))
+        })
+      },
+      onError: (error) => {
+        console.error('Transaction failed/reverted:', error)
+        toast('Transaction failed: ' + error.message)
+      },
+    },
   })
 
   const play = (e) => {
@@ -169,7 +182,7 @@ export default function Page() {
       <div className={`__container ${styles.page__container} flex flex-column justify-content-center gap-1`} data-width={`small`}>
         <figure className={`flex flex-column align-items-center gap-1`}>
           <img alt={`Boo`} src={boo.src} />
-          <figcaption>Start game to play!</figcaption>
+          <figcaption>Click to Open Your Mystery Box! Every entry guarantees a prize. 💰</figcaption>
         </figure>
 
         <button onClick={() => start()} disabled={isGameStarted} className={`${styles.start} d-f-c gap-050`}>
@@ -189,17 +202,21 @@ export default function Page() {
           {VRFRequestPrice && ` (fee: ${web3.utils.fromWei(VRFRequestPrice + fee, `ether`)} ${activeChain[0].nativeCurrency.symbol})`}
         </button>
 
-        {isConfirmed && <p className="text-center badge badge-success">Done</p>}
-        <p className={`text-center`}>{isSigning ? `Signing...` : isConfirming ? 'Confirming...' : `Click to Open Your Mystery Box! Every entry guarantees a prize. 💰`}</p>
+        <p className={`text-center`}>
+          &nbsp;
+          {isSigning && 'Waiting for wallet...'}
+          {isConfirming && 'Confirming transaction...'}
+          {isConfirmed && 'Confirmed!'}
+        </p>
 
         <div className={`grid grid--fill gap-050 w-100`} style={{ '--data-width': `80px` }}>
           {prizes &&
             prizes.map((prize, i) => (
-              <div key={i} className={`${styles.box} d-f-c`} onClick={() => play()}>
+              <button key={i} disabled={!writeContract || isSigning || isConfirming} className={`${styles.box} d-f-c`} onClick={() => play()}>
                 <figure>
                   <img alt={`Somnia`} src={somnia.src} />
                 </figure>
-              </div>
+              </button>
             ))}
         </div>
 

@@ -96,6 +96,10 @@ button.start {
   &:active {
     transform: scale(0.95);
   }
+
+    &[disabled] {
+    opacity: 0.4;
+  }
   figure {
     img {
       --r: 38px;

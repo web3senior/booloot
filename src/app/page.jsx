@@ -27,6 +27,7 @@ export default function Page() {
   const { data: hash, isPending, writeContract } = useWriteContract()
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
+    
   })
 
   const loadMorePosts = async (totalPoll) => {
@@ -136,7 +137,7 @@ export default function Page() {
           </div>
 
           <h1 className="text-white">
-            {web3.utils.fromWei(contractBalance || 0, `ether`)} <small style={{fontSize:`12px`}}>{activeChain[0].nativeCurrency.symbol}</small>
+            {web3.utils.fromWei(contractBalance || 0, `ether`)} <small style={{ fontSize: `12px` }}>{activeChain[0].nativeCurrency.symbol}</small>
           </h1>
 
           <div className={`flex align-items-center gap-025`}>
@@ -158,7 +159,7 @@ export default function Page() {
           </div>
         </div>
 
-        <button>Connect wallet</button>
+        {!isConnected && <button onClick={() => router.push(`/connect`)}>Connect wallet</button>}
         <button onClick={() => router.push(`/leaderboard`)}>Leaderboard</button>
 
         <ul className={`${styles.usecase} flex flex-row align-items-center justify-content-between gap-050`}>
