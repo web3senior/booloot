@@ -1,7 +1,7 @@
 # 💰 Booloot: The Guaranteed-Win Mystery Box Game
 
 ## Demo
-https://aratta.dev
+https://booloot.vercel.app/
 
 ## Verified Contract
 https://explorer.somnia.network/address/0xD8f7DF0aBD834eDcb3e4FC83A11175eB77449f3B
