@@ -6,6 +6,12 @@ https://aratta.dev
 ## Verified Contract
 https://explorer.somnia.network/address/0xD8f7DF0aBD834eDcb3e4FC83A11175eB77449f3B
 
+## UIUX
+<img src="f1.png">
+<img src="f2.png">
+<img src="f3.png">
+<img src="f4.png">
+
 ## Project Overview
 
 Booloot is the guaranteed-win mystery box game! Pay a small fee, open a randomized chest, and instantly win a prize from our fixed pool of rewards. Every player receives a payout, and we use secure Chainlink VRF to ensure every draw is provably fair and tamper-proof. It’s all thrill, no risk—play today to claim your share of the loot!
