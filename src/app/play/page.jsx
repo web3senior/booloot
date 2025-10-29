@@ -24,8 +24,6 @@ export default function Page() {
 
   const [showCommentModal, setShowCommentModal] = useState()
   const { web3, contract } = initGameContract()
-  const giftModal = useRef()
-  const giftModalMessage = useRef()
   const mounted = useClientMounted()
   const [chains, setChains] = useState()
   const params = useParams()
@@ -33,23 +31,25 @@ export default function Page() {
   const { address, isConnected } = useAccount()
   const router = useRouter()
   const { data: hash, isPending: isSigning, error: submitError, writeContract } = useWriteContract()
-  const {
-    isLoading: isConfirming,
-    isSuccess: isConfirmed,
-    error: receiptError,
-  } = useWaitForTransactionReceipt({
+
+  // Function to call AFTER the transaction is confirmed
+  const handleGameResult = (receipt) => {
+    toast('Game played successfully! Starting next step...')
+    // Put the logic you couldn't call before here!
+    console.log('Next step logic executed with receipt:', receipt)
+  }
+
+  // Monitor the transaction status using the hash returned by writeContract
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
+    // Add an onSuccess callback here to run your next function when confirmed
+
     query: {
-      onSuccess: (receipt) => {
-        console.log('Transaction confirmed! Receipt:', receipt)
-        // **CALL YOUR NEXT FUNCTION HERE**
-        getUnclaimedWinnings(address).then((res) => {
-          setUnclaimedWinnings(Number(res))
-        })
-      },
+      enabled: !!hash, // Only run the query when a hash exists
+      onSuccess: handleGameResult,
       onError: (error) => {
         console.error('Transaction failed/reverted:', error)
-        toast('Transaction failed: ' + error.message)
+        toast.error('Transaction failed: ' + error.message)
       },
     },
   })
@@ -212,7 +212,7 @@ export default function Page() {
         <div className={`grid grid--fill gap-050 w-100`} style={{ '--data-width': `80px` }}>
           {prizes &&
             prizes.map((prize, i) => (
-              <button key={i} disabled={!writeContract || isSigning || isConfirming} className={`${styles.box} d-f-c`} onClick={() => play()}>
+              <button key={i} onClick={(e) => play(e)} disabled={!writeContract || isSigning || isConfirming} className={`${styles.box} d-f-c`}>
                 <figure>
                   <img alt={`Somnia`} src={somnia.src} />
                 </figure>
