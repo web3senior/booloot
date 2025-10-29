@@ -1,13 +1,10 @@
 'use client'
 
 import { useState, useEffect, useId, useRef, useCallback } from 'react'
-import BoolootIcon1 from '@/../public/icons/booloot-icon-1.svg'
 import { useParams, useRouter } from 'next/navigation'
-import { useConnectorClient, useConnections, useClient, networks, useWaitForTransactionReceipt, useAccount, useDisconnect, Connector, useConnect, useWriteContract, useReadContract } from 'wagmi'
+import {useWaitForTransactionReceipt, useAccount, useWriteContract } from 'wagmi'
 import { initGameContract, getVRFRequestPrice, getFee, getPlayersBatch, getUnclaimedWinnings, getBalance, getUniquePlayerCount, getAllPrizes, getFulfilled, getActiveChain } from '@/util/communication'
 import { useClientMounted } from '@/hooks/useClientMount'
-import abi from '@/abi/game.json'
-import Profile, { ProfileImage } from '@/app/ui/Profile'
 import styles from './page.module.scss'
 
 export default function Page() {
@@ -23,7 +20,6 @@ export default function Page() {
   const [showCommentModal, setShowCommentModal] = useState()
   const { web3, contract } = initGameContract()
   const giftModal = useRef()
-  const giftModalMessage = useRef()
   const mounted = useClientMounted()
   const [chains, setChains] = useState()
   const params = useParams()
@@ -82,12 +78,6 @@ export default function Page() {
       // This re-enables loading for the next scroll event.
       setIsLoadedPlayer(false)
     }
-  }
-
-  const openModal = (e, item) => {
-    e.target.innerText = `Sending...`
-    setSelectedEmoji({ e: e.target, item: item, message: null })
-    giftModal.current.showModal()
   }
 
   useEffect(() => {

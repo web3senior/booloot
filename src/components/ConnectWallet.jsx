@@ -102,13 +102,16 @@ export function WalletConnectModal({ setShowModal }) {
 }
 
 export function WalletOptions() {
+  const mounted = useClientMounted()
   const { connectors, connect } = useConnect()
 
-  return connectors.map((connector) => (
-    <button className={`${styles['wallet']}`} key={connector.uid} onClick={() => connect({ connector })}>
-      {connector.name}
-    </button>
-  ))
+  return !mounted
+    ? null
+    : connectors.map((connector) => (
+        <button className={`${styles['wallet']}`} key={connector.uid} onClick={() => connect({ connector })}>
+          {connector.name}
+        </button>
+      ))
 }
 
 /**
