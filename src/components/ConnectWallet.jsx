@@ -8,7 +8,7 @@ import { useAccount, useDisconnect, Connector, useConnect } from 'wagmi'
 import Shimmer from '@/helper/Shimmer'
 import Link from 'next/link'
 import { useSwitchChain } from 'wagmi'
-import {getActiveChain} from "@/util/communication"
+import { getActiveChain } from '@/util/communication'
 import styles from './ConnectWallet.module.scss'
 
 export const ConnectWallet = () => {
@@ -154,19 +154,16 @@ const Profile = ({ addr }) => {
   }
 
   useEffect(() => {
-   // getProfile(addr).then(console.log)
+    // getProfile(addr).then(console.log)
   }, [])
 
   //if (!data || data.data?.search_profiles.length === 0) return <Shimmer style={{ width: `32px`, height: `32px`, borderRadius: `999px` }} />
 
   return (
     // <Link href={`/u/${addr}`}>
-      <figure className={`${styles.pfp} d-f-c flex-column grid--gap-050 rounded`}>
-        <img
-          src={'https://ipfs.io/ipfs/bafkreiatl2iuudjiq354ic567bxd7jzhrixf5fh5e6x6uhdvl7xfrwxwzm'}
-          className={`rounded`}
-        />
-      </figure>
+    <figure className={`${styles.pfp} d-f-c flex-column grid--gap-050 rounded`}>
+      <img src={'https://ipfs.io/ipfs/bafkreiatl2iuudjiq354ic567bxd7jzhrixf5fh5e6x6uhdvl7xfrwxwzm'} className={`rounded`} />
+    </figure>
     // </Link>
   )
 }
