@@ -98,43 +98,42 @@ export default function Page() {
   return (
     <div className={`${styles.page} ms-motion-slideDownIn`}>
       <div className={`__container ${styles.page__container} `} data-width={`medium`}>
-          {players.list.length > 0 &&
-            players.list
-              .sort((a, b) => Number(b.wins) - Number(a.wins))
-              .map((item, i) => (
-                <div key={i} className={`${styles.card}`}>
-                  <div className={`${styles.card__body} flex flex-row align-items-center justify-content-between`}>
-                    <div className={` flex flex-row gap-1 align-items-center`}>
-                      <h1>{++i}</h1>
+        {players.list.length > 0 &&
+          players.list
+            .sort((a, b) => Number(b.wins) - Number(a.wins))
+            .map((item, i) => (
+              <div key={i} className={`${styles.card}`}>
+                <div className={`${styles.card__body} flex flex-row align-items-center justify-content-between`}>
+                  <div className={` flex flex-row gap-1 align-items-center`}>
+                    <h1>{++i}</h1>
 
-                      <ul className={` flex flex-column`}>
-                        <li>
-                          User:{' '}
-                          <b>
-                            <code className={``}>{`${item.player.slice(0, 4)}…${item.player.slice(38)}`}</code>
-                          </b>
-                        </li>
-                        <li>
-                          Total win:{' '}
-                          <b>
-                            {web3.utils.fromWei(item.wins, `ether`)} {activeChain[0].nativeCurrency.symbol}
-                          </b>
-                        </li>
-                        <li>
-                          Total play: <b>{item.played}</b>
-                        </li>
-                        <li>
-                          Total spent:{' '}
-                          <b>
-                            {fee && Number(item.played) * web3.utils.fromWei(fee, `ether`)} {activeChain[0].nativeCurrency.symbol}
-                          </b>
-                        </li>
-                      </ul>
-                    </div>
-                    🏅
+                    <ul className={` flex flex-column`}>
+                      <li>
+                        <b>User: </b>
+
+                        <code className={``}>{`${item.player.slice(0, 4)}…${item.player.slice(38)}`}</code>
+                      </li>
+                      <li>
+                        <b>Total win: </b>
+                        <code>
+                          {web3.utils.fromWei(item.wins, `ether`)} {activeChain[0].nativeCurrency.symbol}
+                        </code>
+                      </li>
+                      <li>
+                        <b>Total play: </b> <code>{item.played}</code>
+                      </li>
+                      <li>
+                        <b>Total spent: </b>
+                        <code>
+                          {fee && Number(item.played) * web3.utils.fromWei(fee, `ether`)} {activeChain[0].nativeCurrency.symbol}
+                        </code>
+                      </li>
+                    </ul>
                   </div>
+                  🏅
                 </div>
-              ))}
+              </div>
+            ))}
       </div>
     </div>
   )
