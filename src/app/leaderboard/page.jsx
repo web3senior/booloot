@@ -92,37 +92,32 @@ export default function Page() {
 
   return (
     <div className={`${styles.page} ms-motion-slideDownIn`}>
-      {showCommentModal && <CommentModal item={showCommentModal.data} parentId={showCommentModal.parentId} type={showCommentModal.type} setShowCommentModal={setShowCommentModal} />}
-
-      <div className={`__container ${styles.page__container} flex flex-column justify-content-center gap-1`} data-width={`medium`}>
-        <div className={`grid grid--fill gap-050 w-100`} style={{ '--data-width': `400px` }}>
-          <table className={``}>
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>User</th>
-                <th>Total win</th>
-                <th>Total play</th>
-              </tr>
-            </thead>
-            <tbody>
+      <div className={`__container ${styles.page__container} `} data-width={`medium`}>
+        <div className={`grid grid--fill gap-050`} style={{ '--data-width': `200px` }}>
+       
+          
+            
               {players.list.length > 0 &&
                 players.list
                   .sort((a, b) => Number(b.wins) - Number(a.wins))
                   .map((item, i) => (
-                    <tr key={i}>
-                      <td>1</td>
+                    <div key={i} className={`card`}>
+                    <div className='card__body flex flex-column'>
                       <td>
-                        <code className={``}>{`${item.player.slice(0, 4)}…${item.player.slice(38)}`}</code>
+                        {i===0?`🥇`: i===1?`🥈`:i===2?`🥉`:i}
                       </td>
                       <td>
-                        {web3.utils.fromWei(item.wins, `ether`)} {activeChain[0].nativeCurrency.symbol}
+                        User: <b><code className={``}>{`${item.player.slice(0, 4)}…${item.player.slice(38)}`}</code></b>
                       </td>
-                      <td>{item.played}</td>
-                    </tr>
+                      <td>
+                        Total win: <b>{web3.utils.fromWei(item.wins, `ether`)} {activeChain[0].nativeCurrency.symbol}</b>
+                      </td>
+                      <td>Total play: <b>{item.played}</b></td>
+                    </div>
+                      </div>
                   ))}
-            </tbody>
-          </table>
+          
+     
         </div>
       </div>
     </div>
