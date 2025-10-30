@@ -2,12 +2,13 @@
 
 import { useState, useEffect, useId, useRef, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import {useWaitForTransactionReceipt, useAccount, useWriteContract } from 'wagmi'
+import { useWaitForTransactionReceipt, useAccount, useWriteContract } from 'wagmi'
 import { initGameContract, getVRFRequestPrice, getFee, getPlayersBatch, getUnclaimedWinnings, getBalance, getUniquePlayerCount, getAllPrizes, getFulfilled, getActiveChain } from '@/util/communication'
 import { useClientMounted } from '@/hooks/useClientMount'
 import styles from './page.module.scss'
 
 export default function Page() {
+  const [fee, setFee] = useState()
   const [uniquePlayerCount, setUniquePlayerCount] = useState(0)
   const [isLoadedPlayer, setIsLoadedPlayer] = useState(false)
   const [postsLoaded, setPostsLoaded] = useState(0)
@@ -81,6 +82,10 @@ export default function Page() {
   }
 
   useEffect(() => {
+    getFee().then((res) => {
+      setFee(Number(res))
+    })
+
     getUniquePlayerCount().then((res) => {
       setUniquePlayerCount(Number(res))
 
@@ -93,32 +98,43 @@ export default function Page() {
   return (
     <div className={`${styles.page} ms-motion-slideDownIn`}>
       <div className={`__container ${styles.page__container} `} data-width={`medium`}>
-        <div className={`grid grid--fill gap-050`} style={{ '--data-width': `200px` }}>
-       
-          
-            
-              {players.list.length > 0 &&
-                players.list
-                  .sort((a, b) => Number(b.wins) - Number(a.wins))
-                  .map((item, i) => (
-                    <div key={i} className={`card`}>
-                    <div className='card__body flex flex-column'>
-                      <td>
-                        {i===0?`🥇`: i===1?`🥈`:i===2?`🥉`:i}
-                      </td>
-                      <td>
-                        User: <b><code className={``}>{`${item.player.slice(0, 4)}…${item.player.slice(38)}`}</code></b>
-                      </td>
-                      <td>
-                        Total win: <b>{web3.utils.fromWei(item.wins, `ether`)} {activeChain[0].nativeCurrency.symbol}</b>
-                      </td>
-                      <td>Total play: <b>{item.played}</b></td>
+          {players.list.length > 0 &&
+            players.list
+              .sort((a, b) => Number(b.wins) - Number(a.wins))
+              .map((item, i) => (
+                <div key={i} className={`${styles.card}`}>
+                  <div className={`${styles.card__body} flex flex-row align-items-center justify-content-between`}>
+                    <div className={` flex flex-row gap-1 align-items-center`}>
+                      <h1>{++i}</h1>
+
+                      <ul className={` flex flex-column`}>
+                        <li>
+                          User:{' '}
+                          <b>
+                            <code className={``}>{`${item.player.slice(0, 4)}…${item.player.slice(38)}`}</code>
+                          </b>
+                        </li>
+                        <li>
+                          Total win:{' '}
+                          <b>
+                            {web3.utils.fromWei(item.wins, `ether`)} {activeChain[0].nativeCurrency.symbol}
+                          </b>
+                        </li>
+                        <li>
+                          Total play: <b>{item.played}</b>
+                        </li>
+                        <li>
+                          Total spent:{' '}
+                          <b>
+                            {fee && Number(item.played) * web3.utils.fromWei(fee, `ether`)} {activeChain[0].nativeCurrency.symbol}
+                          </b>
+                        </li>
+                      </ul>
                     </div>
-                      </div>
-                  ))}
-          
-     
-        </div>
+                    🏅
+                  </div>
+                </div>
+              ))}
       </div>
     </div>
   )
