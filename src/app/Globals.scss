@@ -13,7 +13,21 @@
   opacity: 0.5;
   filter: blur(100px);
 }
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
 
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    background-clip: padding-box;
+    border: 2px solid #0000;
+    border-radius: 100vh;
+}
+::-webkit-scrollbar-track {
+    background: 0 0;
+    border-radius: 100vh;
+}
 @media (prefers-color-scheme: light) {
   :root {
     // --background: #0a0a0a;
@@ -30,7 +44,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   min-height: 100%;
 }
 
