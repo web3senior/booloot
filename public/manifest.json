@@ -1,6 +1,6 @@
 {
-  "name": "Hup",
-  "short_name": "Hup",
+  "name": "Booloot",
+  "short_name": "Booloot",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#2E90FA",
+  "theme_color": "#FF601C",
   "background_color": "#ffffff",
   "display": "standalone"
 }
