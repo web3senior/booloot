@@ -69,38 +69,40 @@ contract Booloot is Pausable, ReentrancyGuard, VRFV2PlusWrapperConsumerBase, Con
     // =============================
 
     /// @notice The fixed maximum prize amount (4 ETH), used for ensuring sufficient contract reserve before a game starts.
-    uint256 public constant MAX_PRIZE_RESERVE_ETH = 4 ether;
+    uint256 public constant MAX_PRIZE_RESERVE_ETH = 0.00104 ether;
 
     /// @notice The fixed fee (in wei) required from the player to play a single round of the game.
-    uint256 public fee = 1 ether;
+    uint256 public fee = 0.00026 ether;
 
     /// @notice An array of fixed prizes available in the game, in wei. This pool is infinitely reusable.
     uint256[] public prizes = [
-        0.1 ether,
-        0.1 ether,
-        0.1 ether,
-        0.15 ether,
-        0.2 ether,
-        0.2 ether,
-        0.25 ether,
-        0.25 ether,
-        0.3 ether,
-        0.4 ether,
-        0.4 ether,
-        0.5 ether,
-        0.5 ether,
-        0.6 ether,
-        0.7 ether,
-        0.8 ether,
-        0.9 ether,
-        1.1 ether,
-        1.2 ether,
-        1.5 ether,
-        2 ether,
-        2.5 ether,
-        3.1 ether,
-        3.3 ether,
-        4 ether
+        0.00027 ether,
+        0.00028 ether,
+        0.00029 ether,
+        0.0003 ether,
+        0.00032 ether,
+        0.00034 ether,
+        0.00036 ether,
+        0.0004 ether,
+        0.00045 ether,
+        0.0005 ether,
+        0.00055 ether,
+        0.0006 ether,
+        0.00065 ether,
+        0.0007 ether,
+        0.00075 ether,
+        0.0008 ether,
+        0.00085 ether,
+        0.0009 ether,
+        0.00095 ether,
+        0.001 ether,
+        0.0011 ether,
+        0.0013 ether,
+        0.0015 ether,
+        0.002 ether,
+        0.0025 ether,
+        0.003 ether,
+        0.00104 ether
     ];
 
     /// @notice The total number of unique players who have participated in the game.
@@ -240,15 +242,6 @@ contract Booloot is Pausable, ReentrancyGuard, VRFV2PlusWrapperConsumerBase, Con
      */
     function rng(uint256 len, uint256 nonce) public view returns (uint256) {
         return uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, nonce))) % len;
-    }
-
-    /**
-     * @notice Returns the modulo of a random word by the prizes length. Used for testing the prize selection logic.
-     * @param randomWords A simulated random word.
-     * @return The index into the prize array.
-     */
-    function testTest(uint256 randomWords) public view returns (uint256) {
-        return randomWords % prizes.length;
     }
 
     // =============================

@@ -32,7 +32,7 @@ export const ConnectWallet = () => {
     localStorage.setItem(`${process.env.NEXT_PUBLIC_LOCALSTORAGE_PREFIX}active-chain`, chain.id)
     setDefaultChain(chain)
     setShowNetworks(false)
-    //window.location.reload()
+    window.location.reload()
   }
 
   useEffect(() => {

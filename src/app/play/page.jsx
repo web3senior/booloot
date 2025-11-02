@@ -34,7 +34,7 @@ export default function Page() {
 
   // Function to call AFTER the transaction is confirmed
   const handleGameResult = (receipt) => {
-    toast('Game played successfully! Starting next step...')
+    console.log('Game played successfully! Starting next step...')
     // Put the logic you couldn't call before here!
     console.log('Next step logic executed with receipt:', receipt)
   }
@@ -65,12 +65,16 @@ export default function Page() {
       return
     }
 
-    writeContract({
-      abi,
-      address: activeChain[1].game,
-      functionName: 'play',
-      args: [],
-      value: `${VRFRequestPrice + fee}`, // In wei
+    console.log(`ETH send value: `, VRFRequestPrice + fee)
+
+    getVRFRequestPrice().then((res) => {
+      writeContract({
+        abi,
+        address: activeChain[1].game,
+        functionName: 'play',
+        args: [],
+        value: `${Number(res) + fee}`, // In wei
+      })
     })
   }
 
@@ -94,15 +98,17 @@ export default function Page() {
 
   useEffect(() => {
     getVRFRequestPrice().then((res) => {
+      console.log(`VRF request price: `, Number(res))
       console.log(web3.utils.fromWei(res, `ether`))
       setVRFRequestPrice(Number(res))
     })
 
     getFulfilled().then((res) => {
-      console.log(res)
+      console.log(`Is fulfilled: `, res)
     })
 
     getFee().then((res) => {
+      console.log(`Fee: `, res)
       setFee(Number(res))
     })
 
@@ -114,14 +120,16 @@ export default function Page() {
       setUniquePlayerCount(Number(res))
     })
 
-    getUnclaimedWinnings(address).then((res) => {
-      setUnclaimedWinnings(Number(res))
-    })
+    if (isConnected) {
+      getUnclaimedWinnings(address).then((res) => {
+        setUnclaimedWinnings(Number(res))
+      })
+    }
 
     getAllPrizes().then((res) => {
       setPrizes(res)
     })
-  }, []) // Added necessary dependencies  [isLoadedComment, commentsLoaded]
+  }, [isConnected]) // Added necessary dependencies  [isLoadedComment, commentsLoaded]
 
   return (
     <div className={`${styles.page} ms-motion-slideDownIn`}>
